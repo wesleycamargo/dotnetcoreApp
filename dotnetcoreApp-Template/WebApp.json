@@ -33,7 +33,7 @@
     }
   },
   "variables": {
-        "WebApp2Name": "[concat('WebApp2', uniqueString(resourceGroup().id))]"
+        "WebApp2Name": "[concat(parameters('WebAppName'),'WebApp2', uniqueString(resourceGroup().id))]"
   },
   "resources": [
     {
