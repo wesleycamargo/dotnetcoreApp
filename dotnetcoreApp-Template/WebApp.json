@@ -55,7 +55,8 @@
     },
 
     {
-      "name": "[parameters('WebAppName')]",
+      "name": "[variables('WebApp2Name')]",
+      //"name": "[parameters('WebAppName')]",
       "type": "Microsoft.Web/sites",
       "location": "[resourceGroup().location]",
       "apiVersion": "2015-08-01",
@@ -67,11 +68,16 @@
         "displayName": "WebApp"
       },
       "properties": {
-        "name": "[parameters('WebAppName')]",
+        "name": "[variables('WebApp2Name')]",
+        //"name": "[parameters('WebAppName')]",
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('ServicePlanName'))]"
       }
     }
   ],
   "outputs": {
+    "webAppName": {
+      "type": "string",
+      "value": "[variables('WebApp2Name')]"
+    }
   }
 }
