@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2048
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetcoreApp", "dotnetcoreApp\dotnetcoreApp.csproj", "{9295975A-56C3-4A17-AC4A-64CA419EECFF}"
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "dotnetcoreApp-Template", "dotnetcoreApp-Template\dotnetcoreApp-Template.deployproj", "{A0A4C2C4-92CD-441A-89EE-41DFC29391B2}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Blank-Template", "Blank-Template\Blank-Template.deployproj", "{11F232B3-03CC-4207-97CA-A0CFACC31F90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A0A4C2C4-92CD-441A-89EE-41DFC29391B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0A4C2C4-92CD-441A-89EE-41DFC29391B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0A4C2C4-92CD-441A-89EE-41DFC29391B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11F232B3-03CC-4207-97CA-A0CFACC31F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11F232B3-03CC-4207-97CA-A0CFACC31F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11F232B3-03CC-4207-97CA-A0CFACC31F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11F232B3-03CC-4207-97CA-A0CFACC31F90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
