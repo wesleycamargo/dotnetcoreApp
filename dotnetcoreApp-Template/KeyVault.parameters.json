@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "keyVaultName": {
-      "value": "keyVault"
+      "value": "keyVaultARMTemplate"
     },
     "secretName": {
       "value": "secretName"
@@ -12,7 +12,7 @@
       "value": "secretValue"
     },
     "webAppName": {
-      "value": "webAppName"
+      "value": "WebApp2nqoh7r5dqr7a4"
     }
   }
 }

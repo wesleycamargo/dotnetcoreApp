@@ -9,38 +9,57 @@
       "type": "string"
     }
   },
-  "variables": {},
-  "resources": [{
-    "type": "Microsoft.Resources/deployments",
-    "name": "createwebapp",
-    "apiVersion": "2018-05-01",
-    "properties": {
-      "mode": "Incremental",
-      "templateLink": {
-        "uri": "https://raw.githubusercontent.com/wesleycamargo/dotnetcoreApp/feature/blanktemplate/dotnetcoreApp-Template/WebApp.json"
-      },
-      "parameters": {
-        "ServicePlanName": {
-          "value": "[parameters('ServicePlanName')]"
+  "variables": {
+    "keyVaulTemplateUrl":"https://github.com/wesleycamargo/dotnetcoreApp/blob/feature/templatecomposto/dotnetcoreApp-Template/KeyVault.json"
+  },
+  "resources": [    
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "createWebapp",
+      "apiVersion": "2018-05-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/wesleycamargo/dotnetcoreApp/feature/blanktemplate/dotnetcoreApp-Template/WebApp.json"
         },
-        "WebAppName": {
-          "value": "[parameters('WebAppName')]"
+        "parameters": {
+          "ServicePlanName": {
+            "value": "[parameters('ServicePlanName')]"
+          },
+          "WebAppName": {
+            "value": "[parameters('WebAppName')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "createKeyVault",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [
+        "createWebapp"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('keyVaulTemplateUrl')]"
+        },
+        "parameters": {
+          "keyVaultName": {
+            "value": "keyVaultArmTemplate"
+          },
+          "secretName": {
+            "value": "secretName"
+          },
+          "secretValue":{
+            "value":"secretValue"
+          },
+          "webAppName": {
+            "value": "WebApp2nqoh7r5dqr7a4"
+          }
         }
       }
     }
-  }],
-  "outputs": {
-    "webAppName":{
-      "type": "string",
-      // "value":"[reference(concat(resourceId('Microsoft.Web/sites', parameters('WebAppName')), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').principalId]"
-      //"value":"[reference(concat(resourceId('Microsoft.Web/sites', reference('linkedTemplate').outputs.greetingMessage.value), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').principalId]"
-      "value": "[reference('createwebapp').outputs.WebAppName.value]"     
-    },
-    "webAppId":{
-      "type": "string",
-      "value":"[reference(concat(resourceId('Microsoft.Web/sites', reference('WebAppName')), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').principalId]"
-
-    }
-    
-  }
+  ],
+  "outputs": {}
 }

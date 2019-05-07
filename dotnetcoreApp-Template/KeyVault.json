@@ -16,9 +16,7 @@
     }
   },
   "variables": {
-    "identity_resource_id": "[concat(resourceId('Microsoft.Web/sites', parameters('webAppName')), '/providers/Microsoft.ManagedIdentity/Identities/default')]",
-    "tenantId": "[reference(variables('identity_resource_id'), '2015-08-31-PREVIEW').tenantId]",
-    "objectId": "[reference(variables('identity_resource_id'), '2015-08-31-PREVIEW').principalId]"
+    "identity_resource_id": "[concat(resourceId('Microsoft.Web/sites', parameters('webAppName')), '/providers/Microsoft.ManagedIdentity/Identities/default')]"
   },
   "resources": [
     {
@@ -31,12 +29,12 @@
           "family": "A",
           "name": "Standard"
         },
-        "tenantId": "[variables('tenantId')]",
+        "tenantId": "[reference(variables('identity_resource_id'), '2015-08-31-PREVIEW').tenantId]",
         //"accessPolicies": "[parameters('accessPolicies')]",
         "accessPolicies": [
           {
-            "tenantId": "[variables('tenantId')]",
-            "objectId": "[variables('objectId')]",
+            "tenantId": "[reference(variables('identity_resource_id'), '2015-08-31-PREVIEW').tenantId]",
+            "objectId": "[reference(variables('identity_resource_id'), '2015-08-31-PREVIEW').principalId]",
             "permissions": {
               "keys": [],
               "secrets": [
@@ -47,7 +45,7 @@
             }
           }
         ],
-        
+
         "enabledForDeployment": false,
         "enabledForDiskEncryption": false,
         "enabledForTemplateDeployment": false
@@ -56,7 +54,7 @@
     {
       "type": "Microsoft.KeyVault/vaults/secrets",
       "apiVersion": "2016-10-01",
-      "name": "[concat(parameters('keyVaultName'), '/',parameters('secretName')]",
+      "name": "[concat(parameters('keyVaultName'), '/',parameters('secretName'))]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
