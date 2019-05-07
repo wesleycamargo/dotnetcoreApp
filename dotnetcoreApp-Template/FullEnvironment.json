@@ -1,0 +1,33 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "ServicePlanName":{
+      "type": "string"
+    },
+    "WebAppName":{
+      "type": "string"
+    }
+  },
+  "variables": {},
+  "resources": [{
+    "type": "Microsoft.Resources/deployments",
+    "name": "createwebapp",
+    "apiVersion": "2018-05-01",
+    "properties": {
+      "mode": "Incremental",
+      "templateLink": {
+        "uri": "https://raw.githubusercontent.com/wesleycamargo/dotnetcoreApp/feature/blanktemplate/dotnetcoreApp-Template/WebApp.json"
+      },
+      "parameters": {
+        "ServicePlanName": {
+          "value": "[parameters('ServicePlanName')]"
+        },
+        "WebAppName": {
+          "value": "[parameters('WebAppName')]"
+        }
+      }
+    }
+  }],
+  "outputs": {}
+}

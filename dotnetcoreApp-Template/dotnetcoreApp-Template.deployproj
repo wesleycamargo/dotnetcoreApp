@@ -29,6 +29,12 @@
     <Content Include="Deploy-AzureResourceGroup.ps1" />
     <Content Include="WebApp.json" />
     <Content Include="WebApp.parameters.json" />
+    <Content Include="FullEnvironment.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FullEnvironment.parameters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
