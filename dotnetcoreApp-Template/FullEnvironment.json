@@ -29,5 +29,18 @@
       }
     }
   }],
-  "outputs": {}
+  "outputs": {
+    "webAppName":{
+      "type": "string",
+      // "value":"[reference(concat(resourceId('Microsoft.Web/sites', parameters('WebAppName')), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').principalId]"
+      //"value":"[reference(concat(resourceId('Microsoft.Web/sites', reference('linkedTemplate').outputs.greetingMessage.value), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').principalId]"
+      "value": "[reference('createwebapp').outputs.WebAppName.value]"     
+    },
+    "webAppId":{
+      "type": "string",
+      "value":"[reference(concat(resourceId('Microsoft.Web/sites', reference('WebAppName')), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').principalId]"
+
+    }
+    
+  }
 }

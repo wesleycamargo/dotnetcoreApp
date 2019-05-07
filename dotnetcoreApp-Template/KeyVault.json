@@ -1,0 +1,74 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "keyVaultName": {
+      "type": "string"
+    },
+    "secretName": {
+      "type": "string"
+    },
+    "secretValue": {
+      "type": "securestring"
+    },
+    "webAppName": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "identity_resource_id": "[concat(resourceId('Microsoft.Web/sites', parameters('webAppName')), '/providers/Microsoft.ManagedIdentity/Identities/default')]",
+    "tenantId": "[reference(variables('identity_resource_id'), '2015-08-31-PREVIEW').tenantId]",
+    "objectId": "[reference(variables('identity_resource_id'), '2015-08-31-PREVIEW').principalId]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "apiVersion": "2016-10-01",
+      "name": "[parameters('keyVaultName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "sku": {
+          "family": "A",
+          "name": "Standard"
+        },
+        "tenantId": "[variables('tenantId')]",
+        //"accessPolicies": "[parameters('accessPolicies')]",
+        "accessPolicies": [
+          {
+            "tenantId": "[variables('tenantId')]",
+            "objectId": "[variables('objectId')]",
+            "permissions": {
+              "keys": [],
+              "secrets": [
+                "Get",
+                "List"
+              ],
+              "certificates": []
+            }
+          }
+        ],
+        
+        "enabledForDeployment": false,
+        "enabledForDiskEncryption": false,
+        "enabledForTemplateDeployment": false
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2016-10-01",
+      "name": "[concat(parameters('keyVaultName'), '/',parameters('secretName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+      ],
+      "properties": {
+        "value": "[parameters('secretValue')]",
+        "attributes": {
+          "enabled": true
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}
