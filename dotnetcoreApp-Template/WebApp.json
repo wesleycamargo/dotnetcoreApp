@@ -40,11 +40,14 @@
       "name": "[parameters('ServicePlanName')]",
       "type": "Microsoft.Web/serverfarms",
       "location": "[resourceGroup().location]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
       "apiVersion": "2015-08-01",
       "sku": {
         "name": "[parameters('ServicePlanSkuName')]"
       },
-      "dependsOn": [ ],
+      "dependsOn": [],
       "tags": {
         "displayName": "ServicePlan"
       },
@@ -53,7 +56,6 @@
         "numberOfWorkers": 1
       }
     },
-
     {
       "name": "[variables('WebAppName')]",
       "type": "Microsoft.Web/sites",
@@ -68,7 +70,6 @@
       },
       "properties": {
         "name": "[variables('WebAppName')]",
-
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('ServicePlanName'))]"
       }
     }
@@ -76,7 +77,7 @@
   "outputs": {
     "webAppName": {
       "type": "string",
-      "value": "[variables('WebAppName')]"
+      "value": "[variables('webAppName')]"
     }
   }
 }

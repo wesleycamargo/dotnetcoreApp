@@ -16,7 +16,7 @@
     }
   },
   "variables": {
-    "identity_resource_id": "[concat(resourceId('Microsoft.Web/sites', parameters('webAppName')), '/providers/Microsoft.ManagedIdentity/Identities/default')]"
+    "identity_resource_id": "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
   },
   "resources": [
     {
@@ -29,12 +29,18 @@
           "family": "A",
           "name": "Standard"
         },
-        "tenantId": "[reference(variables('identity_resource_id'), '2015-08-31-PREVIEW').tenantId]",
+        "tenantId": "[reference(variables('identity_resource_id'), '2018-11-01', 'Full').identity.tenantId]",
         //"accessPolicies": "[parameters('accessPolicies')]",
         "accessPolicies": [
           {
-            "tenantId": "[reference(variables('identity_resource_id'), '2015-08-31-PREVIEW').tenantId]",
-            "objectId": "[reference(variables('identity_resource_id'), '2015-08-31-PREVIEW').principalId]",
+            "tenantId": "[reference(variables('identity_resource_id'), '2018-11-01', 'Full').identity.tenantId]",
+            "objectId": "[reference(variables('identity_resource_id'), '2018-11-01', 'Full').identity.principalId]",
+
+
+            // "tenantId": "[reference(concat('Microsoft.Compute/virtualMachines/', variables('vmName')), '2017-03-30', 'Full').identity.tenantId]",
+            // "objectId": "[reference(concat('Microsoft.Compute/virtualMachines/', variables('vmName')), '2017-03-30', 'Full').identity.principalId]",
+
+
             "permissions": {
               "keys": [],
               "secrets": [
@@ -68,5 +74,9 @@
     }
   ],
   "outputs": {
+    "obj":{
+      "type": "object",
+      "value": "[reference(variables('identity_resource_id'), '2018-11-01', 'Full')]"
+    }
   }
 }
